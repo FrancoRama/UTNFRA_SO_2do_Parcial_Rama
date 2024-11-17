@@ -1,0 +1,45 @@
+---
+
+# tasks file for rol_directorios
+
+# Crear estructura de directorios
+- name: Crear directorio base
+  ansible.builtin.file:
+    path: /tmp/2do-parcial
+    state: directory
+    mode: '0755'
+
+- name: Crear directorio alumno
+  ansible.builtin.file:
+    path: /tmp/2do-parcial/alumno
+    state: directory
+    mode: '0755'
+
+- name: Crear directorio equipo
+  ansible.builtin.file:
+    path: /tmp/2do-parcial/equipo
+    state: directory
+    mode: '0755'
+
+# Crear archivo datos_alumno.txt
+- name: Generar archivo datos_alumno.txt
+  ansible.builtin.template:
+    src: datos_alumno.txt.j2
+    dest: /tmp/2do-parcial/alumno/datos_alumno.txt
+    mode: '0644'
+
+# Crear archivo datos_equipo.txt
+- name: Generar archivo datos_equipo.txt
+  ansible.builtin.template:
+    src: datos_equipo.txt.j2
+    dest: /tmp/2do-parcial/equipo/datos_equipo.txt
+    mode: '0644'
+
+# Configurar sudoers para 2PSupervisores
+- name: Configurar sudoers para 2PSupervisores
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/2PSupervisores
+    create: yes
+    line: "%2PSupervisores ALL=(ALL) NOPASSWD:ALL"
+    mode: '0440'
+
